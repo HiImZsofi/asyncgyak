@@ -1,7 +1,5 @@
 let userlista = []
-let unames = []
-let emails = []
-let telefon = []
+
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -10,6 +8,14 @@ document.addEventListener('DOMContentLoaded', () => {
     })
     document.getElementById('contact').addEventListener('click', async () => {
         table()
+    })
+    document.getElementById('szamitas').addEventListener('click', async () => {
+        var xertekek = parseInt(document.getElementById('xertek').value)
+        osszsuly(xertekek)
+    })
+
+    document.getElementById('barna').addEventListener('click', async () => {
+        szemszin()
     })
 })
 
@@ -56,5 +62,33 @@ async function table(){
         tabla.appendChild(tr);
     }
     
+}
+
+async function osszsuly(x){
+    let response = await fetch('users.json')
+    let result = await response.json()
+    var sum = 0
+
+    for (let p in result.users){
+        if(p.height > x){
+            sum += p.weight
+        }
+    }
+    var message = "Összsúly: " + sum + " kg"
+    return document.getElementById('sulyiratas').append(message)
+}
+
+async function szemszin(){
+    let response = await fetch('users.json')
+    let result = await response.json()
+
+    var sum = 0
+
+    for (let p in result.users){
+        if(p.eyeColor == "Brown"){
+            sum++
+        }
+    }
+    document.getElementById('sziniratas').append(sum)
 }
 
