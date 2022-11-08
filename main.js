@@ -1,5 +1,5 @@
 let userlista = []
-
+var xertekek = 0
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -10,7 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
         table()
     })
     document.getElementById('szamitas').addEventListener('click', async () => {
-        var xertekek = parseInt(document.getElementById('xertek').value)
         osszsuly(xertekek)
     })
 
@@ -69,12 +68,22 @@ async function osszsuly(x){
     let result = await response.json()
     var sum = 0
 
-    for (let p in result.users){
-        if(p.height > x){
-            sum += p.weight
-        }
-    }
-    var message = "Összsúly: " + sum + " kg"
+    // for (let p in result.users){
+    //     console.log("for")
+    //     if( p.height > x){
+    //         sum += p.weight
+    //         console.log("if")
+    //     }
+    // }
+
+    xertekek = parseInt(document.getElementById('xertek').value)
+
+    let heights = result.users.filter(e => e.height >= xertekek)
+
+    heights.forEach(element => {
+        sum += element.weight
+    })
+    var message = "Összsúly: " + Math.floor(sum) + " kg"
     return document.getElementById('sulyiratas').append(message)
 }
 
