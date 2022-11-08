@@ -14,12 +14,15 @@ async function usernames(){
     let result = await response.json()
 
     userlista.textContent = ''
+
+    result.users.sort((a, b) => a.lastName.localeCompare(b.lastName))
     
 
     for (let p of result.users) {
         let li = document.createElement('li')
-        li.textContent = p.firstName + " - " + p.lastName
+        li.textContent = p.lastName.toUpperCase() + ", " + p.firstName
         document.getElementById("htmllista").appendChild(li);
     }
+
 }
 
